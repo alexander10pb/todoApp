@@ -14,6 +14,9 @@ export class LabsComponent {
   tasks = [
     'Instalar el Angular CLI',
     'Crear proyecto',
-    'Crear componentes'
+    'Crear componentes',
+    'Crear servicio'
   ];
+  name = 'Alexander';
+  age = 22;
 }
