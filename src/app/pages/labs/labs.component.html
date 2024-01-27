@@ -49,4 +49,12 @@
   <ng-template #miBloque>
     Aun soy menor de edad
   </ng-template>
+  <hr>
+  <input type="text" [value]="person().name" (change)="changeName($event)">
+  <div [ngSwitch]="person().name">
+    <p *ngSwitchCase="'Alexander'"> Yo soy Alexander</p>
+    <p *ngSwitchCase="'Nicolas'"> Yo soy Nicolas</p>
+    <p *ngSwitchCase="'Julian'"> Yo soy Julian</p>
+    <p *ngSwitchDefault> Yo cumplo con ninguna</p>
+  </div>
 </div>
