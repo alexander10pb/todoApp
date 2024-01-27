@@ -60,4 +60,12 @@
   <hr>
   <input type="color" [formControl]="colorCtrol">
   <p>Color: {{ colorCtrol.value }}</p>
+  <svg>
+    <g>
+      <rect x="0" y="0" height="100" width="100" [attr.fill]="colorCtrol.value"/>
+    </g>
+  </svg>
+  <hr>
+  <input type="number" [formControl]="widhthCtrol">
+  <span class="box" [style.width.px]="widhthCtrol.value"></span>
 </div>

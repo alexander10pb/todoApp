@@ -30,6 +30,9 @@ export class LabsComponent {
   });
 
   colorCtrol = new FormControl()
+  widhthCtrol = new FormControl(50, {
+    nonNullable: true,
+  })
 
   constructor() {
     this.colorCtrol.valueChanges.subscribe(value => {
