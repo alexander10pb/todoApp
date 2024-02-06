@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, signal, effect } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Task } from './../../models/task.model';
@@ -12,25 +12,9 @@ import { Task } from './../../models/task.model';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Crear proyecto',
-      completed: false
-    },
-    {
-      id: Date.now(),
-      title: 'Crear componentes',
-      completed: false
-    },
-    {
-      id: Date.now(),
-      title: 'Crear servicio',
-      completed: false
-    }
-  ]);
+  tasks = signal<Task[]>([]);
 
-  filter = signal('all');
+  filter = signal<'all' | 'pending' | 'completed'>('all');
   tasksByFilter = computed(() => {
     const filter = this.filter();
     const tasks = this.tasks();
@@ -49,6 +33,23 @@ export class HomeComponent {
       Validators.required
     ]
   })
+
+  constructor() {
+    effect(() => {
+      // console.log('run effect');
+      const tasks = this.tasks();
+      // console.log(tasks);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    })
+  }
+
+  ngOnInit() {
+    const storage = localStorage.getItem('tasks');
+    if (storage) {
+      const tasks = JSON.parse(storage);
+      this.tasks.set(tasks);
+    }
+  }
 
   changeHandler() {
     if (this.newTaskCtrl.valid) {
@@ -120,7 +121,7 @@ export class HomeComponent {
     })
   }
 
-  changeFilter(filter: string){
+  changeFilter(filter: 'all' | 'pending' | 'completed'){
     this.filter.set(filter)
   }
 }
